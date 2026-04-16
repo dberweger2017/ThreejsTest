@@ -46,7 +46,7 @@ const floorMaterial = new THREE.MeshStandardMaterial({
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2; // Rotate flat
 floor.position.y = -1; // Move slightly down
-floor.receiveShadow = true; // IMPORTANT for shadows
+floor.receiveShadow = true;
 scene.add(floor);
 
 // 3D Square (Cube)
@@ -54,8 +54,21 @@ const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
 const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0x0077ff });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 cube.position.y = 1;
-cube.castShadow = true; // IMPORTANT for shadows
+cube.castShadow = true;
 scene.add(cube);
+
+// Mouse Interaction
+let mouseX = 0;
+let mouseY = 0;
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+const lookTarget = new THREE.Vector3(0, 0, 0);
+
+document.addEventListener('mousemove', (event) => {
+    // Normalize to range [-1, 1]
+    mouseX = (event.clientX - windowHalfX) / windowHalfX;
+    mouseY = (event.clientY - windowHalfY) / windowHalfY;
+});
 
 // Animation loop
 function animate() {
@@ -65,6 +78,15 @@ function animate() {
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
 
+    // Calculate target position based on mouse offsets
+    const targetX = mouseX * 5;
+    const targetY = -mouseY * 5;
+
+    // Smoothly interpolate (lerp) the camera's look target
+    lookTarget.x += (targetX - lookTarget.x) * 0.05;
+    lookTarget.y += (targetY - lookTarget.y) * 0.05;
+    camera.lookAt(lookTarget);
+
     renderer.render(scene, camera);
 }
 
@@ -72,6 +94,8 @@ animate();
 
 // Handle window resize
 window.addEventListener('resize', () => {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
