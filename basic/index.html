@@ -14,10 +14,51 @@
         canvas {
             display: block;
         }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .slider-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .slider-group label {
+            width: 20px;
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 
 <body>
+    <div id="ui">
+        <div class="slider-group">
+            <label for="cubeX">X</label>
+            <input type="range" id="cubeX" min="-10" max="10" step="0.1" value="0">
+        </div>
+        <div class="slider-group">
+            <label for="cubeY">Y</label>
+            <input type="range" id="cubeY" min="-2" max="10" step="0.1" value="1.5">
+        </div>
+        <div class="slider-group">
+            <label for="cubeZ">Z</label>
+            <input type="range" id="cubeZ" min="-10" max="10" step="0.1" value="0">
+        </div>
+    </div>
     <canvas id="bg"></canvas>
     <script type="module" src="main.js"></script>
 </body>

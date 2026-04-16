@@ -57,17 +57,37 @@ cube.position.y = 1.5;
 cube.castShadow = true;
 scene.add(cube);
 
+// UI Slider Interaction
+document.getElementById('cubeX').addEventListener('input', (event) => {
+    cube.position.x = parseFloat(event.target.value);
+});
+document.getElementById('cubeY').addEventListener('input', (event) => {
+    cube.position.y = parseFloat(event.target.value);
+});
+document.getElementById('cubeZ').addEventListener('input', (event) => {
+    cube.position.z = parseFloat(event.target.value);
+});
+
 // Mouse Interaction
 let mouseX = 0;
 let mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 const lookTarget = new THREE.Vector3(0, 0, 0);
+let isCtrlPressed = false;
 
 document.addEventListener('mousemove', (event) => {
     // Normalize to range [-1, 1]
     mouseX = (event.clientX - windowHalfX) / windowHalfX;
     mouseY = (event.clientY - windowHalfY) / windowHalfY;
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Control') isCtrlPressed = true;
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.key === 'Control') isCtrlPressed = false;
 });
 
 // Animation loop
@@ -78,9 +98,9 @@ function animate() {
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
 
-    // Calculate target position based on mouse offsets
-    const targetX = mouseX * 5;
-    const targetY = -mouseY * 5;
+    // Calculate target position based on mouse offsets (only if Control is held)
+    const targetX = isCtrlPressed ? mouseX * 5 : 0;
+    const targetY = isCtrlPressed ? -mouseY * 5 : 0;
 
     // Smoothly move the camera's look target
     lookTarget.x += (targetX - lookTarget.x) * 0.05;
