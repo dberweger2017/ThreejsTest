@@ -53,7 +53,7 @@ scene.add(floor);
 const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
 const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0x0077ff });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-cube.position.y = 1;
+cube.position.y = 1.5;
 cube.castShadow = true;
 scene.add(cube);
 
@@ -82,7 +82,7 @@ function animate() {
     const targetX = mouseX * 5;
     const targetY = -mouseY * 5;
 
-    // Smoothly interpolate (lerp) the camera's look target
+    // Smoothly move the camera's look target
     lookTarget.x += (targetX - lookTarget.x) * 0.05;
     lookTarget.y += (targetY - lookTarget.y) * 0.05;
     camera.lookAt(lookTarget);
@@ -91,12 +91,3 @@ function animate() {
 }
 
 animate();
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    windowHalfX = window.innerWidth / 2;
-    windowHalfY = window.innerHeight / 2;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
