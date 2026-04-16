@@ -36,6 +36,8 @@ directionalLight.shadow.camera.bottom = -10;
 scene.add(directionalLight);
 
 // Geometry
+
+// Floor
 const floorGeometry = new THREE.PlaneGeometry(20, 20);
 const floorMaterial = new THREE.MeshStandardMaterial({
     color: 0xffffff,
