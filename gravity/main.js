@@ -4,12 +4,7 @@ const canvas = document.querySelector('#bg');
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xf0f0f0);
 
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 8;
 camera.position.y = 1;
 
